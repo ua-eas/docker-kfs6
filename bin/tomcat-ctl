@@ -12,6 +12,9 @@ echo_time() {
 }
 
 tomcat_start () {
+    #start rsyslog daemon to utilize logrotate
+    /etc/init.d/rsyslog start
+
     #run logrotate on our log files
     logrotate -f /etc/logrotate.conf
 
@@ -47,7 +50,7 @@ tomcat_start () {
 
     # Extract the WAR file
     cd $TOMCAT_KFS_DIR
-    unzip "$TOMCAT_KFS_DIR/kfs.war"
+    unzip -oq "$TOMCAT_KFS_DIR/kfs.war"
 
 
     # copy in tomcat configuration files
@@ -83,7 +86,7 @@ tomcat_start () {
 
     # extract files in kfs-core-ua* jar
     # cd $TOMCAT_KFS_CORE_DIR
-    unzip $TOMCAT_KFS_DIR/WEB-INF/lib/kfs-core-ua* -d $TOMCAT_KFS_CORE_DIR
+    unzip -oq $TOMCAT_KFS_DIR/WEB-INF/lib/kfs-core-ua* -d $TOMCAT_KFS_CORE_DIR
 
     # copy edu changelog files to changelogs directory
     mv $TOMCAT_KFS_CORE_DIR/edu/ $UA_DB_CHANGELOGS_DIR/
