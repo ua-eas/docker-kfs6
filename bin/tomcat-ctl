@@ -83,6 +83,8 @@ tomcat_start () {
     /usr/bin/jar -xf $TOMCAT_KFS_DIR/WEB-INF/lib/kfs-core-ua*
 
 #   Swap SMTP value to work for AWS
+	log "Swaping SMTP value to work for AWS."
+	echo_time "Starting up swaping of SMTP email config"
 	sed -i "s/mail.smtp.host=smtp.local/mail.smtp.host=email-smtp.us-west-2.amazonaws.com/" $TOMCAT_KFS_CORE_DIR/institutional-config.properties
 
 	sed -i "s/mail.smtp.port=25/mail.smtp.port=587/" $TOMCAT_KFS_CORE_DIR/institutional-config.properties
